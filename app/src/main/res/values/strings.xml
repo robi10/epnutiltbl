@@ -15,7 +15,7 @@
   ~
   -->
 <resources>
-    <string name="app_name">Setting</string>
+    <string name="app_name">EpnUtilTbl</string>
     <string name="app_tagline">Better surveys with Jetpack Compose</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
