@@ -22,11 +22,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.compose.epnutiltbl.welcome.WelcomeViewModel
 import kotlinx.coroutines.launch
 
 class SettingViewModel(
     private val settingRepository: SettingRepository,
-    private val photoUriManager: PhotoUriManager
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<SettingState>()
@@ -64,52 +64,14 @@ class SettingViewModel(
         val result = settingRepository.getSettingResult(answers)
         _uiState.value = SettingState.Result(settingQuestions.settingTitle, result)
     }
-
-    fun onDatePicked(questionId: Int, date: String) {
-        updateStateWithActionResult(questionId, SettingActionResult.Date(date))
-    }
-
-    fun getUriToSaveImage(): Uri? {
-        uri = photoUriManager.buildNewUri()
-        return uri
-    }
-
-    fun onImageSaved() {
-        uri?.let { uri ->
-            getLatestQuestionId()?.let { questionId ->
-                updateStateWithActionResult(questionId, SettingActionResult.Photo(uri))
-            }
-        }
-    }
-
-    private fun updateStateWithActionResult(questionId: Int, result: SettingActionResult) {
-        val latestState = _uiState.value
-        if (latestState != null && latestState is SettingState.Questions) {
-            val question =
-                latestState.questionsState.first { questionState ->
-                    questionState.question.id == questionId
-                }
-            question.answer = Answer.Action(result)
-            question.enableNext = true
-        }
-    }
-
-    private fun getLatestQuestionId(): Int? {
-        val latestState = _uiState.value
-        if (latestState != null && latestState is SettingState.Questions) {
-            return latestState.questionsState[latestState.currentQuestionIndex].question.id
-        }
-        return null
-    }
 }
 
 class SettingViewModelFactory(
-    private val photoUriManager: PhotoUriManager
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
-            return SettingViewModel(SettingRepository, photoUriManager) as T
+            return SettingViewModel(SettingRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

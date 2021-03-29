@@ -32,23 +32,15 @@ import com.google.android.material.datepicker.MaterialDatePicker
 class SettingFragment : Fragment() {
 
     private val viewModel: SettingViewModel by viewModels {
-        SettingViewModelFactory(PhotoUriManager(requireContext().applicationContext))
-    }
-
-    private val takePicture = registerForActivityResult(TakePicture()) { photoSaved ->
-        if (photoSaved) {
-            viewModel.onImageSaved()
-        }
+        SettingViewModelFactory()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
-            // In order for savedState to work, the same ID needs to be used for all instances.
-            id = R.id.sign_in_fragment
 
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -60,7 +52,6 @@ class SettingFragment : Fragment() {
                         when (settingState) {
                             is SettingState.Questions -> SettingQuestionsScreen(
                                 questions = settingState,
-                                onAction = { id, action -> handleSurveyAction(id, action) },
                                 onDonePressed = { viewModel.computeResult(settingState) },
                                 onBackPressed = {
                                     activity?.onBackPressedDispatcher?.onBackPressed()
@@ -77,32 +68,5 @@ class SettingFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun handleSurveyAction(questionId: Int, actionType: SettingActionType) {
-        when (actionType) {
-            SettingActionType.PICK_DATE -> showDatePicker(questionId)
-            SettingActionType.TAKE_PHOTO -> takeAPhoto()
-            SettingActionType.SELECT_CONTACT -> selectContact(questionId)
-        }
-    }
-
-    private fun showDatePicker(questionId: Int) {
-        val picker = MaterialDatePicker.Builder.datePicker().build()
-        activity?.let {
-            picker.show(it.supportFragmentManager, picker.toString())
-            picker.addOnPositiveButtonClickListener {
-                viewModel.onDatePicked(questionId, picker.headerText)
-            }
-        }
-    }
-
-    private fun takeAPhoto() {
-        takePicture.launch(viewModel.getUriToSaveImage())
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    private fun selectContact(questionId: Int) {
-        // TODO: unsupported for now
     }
 }

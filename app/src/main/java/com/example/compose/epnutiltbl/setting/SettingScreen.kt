@@ -55,7 +55,6 @@ import com.example.compose.epnutiltbl.theme.progressIndicatorBackground
 @Composable
 fun SettingQuestionsScreen(
     questions: SettingState.Questions,
-    onAction: (Int, SettingActionType) -> Unit,
     onDonePressed: () -> Unit,
     onBackPressed: () -> Unit
 ) {
@@ -80,7 +79,6 @@ fun SettingQuestionsScreen(
                         questionState.answer = it
                         questionState.enableNext = true
                     },
-                    onAction = onAction,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding)
