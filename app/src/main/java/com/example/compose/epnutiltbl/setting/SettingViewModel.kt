@@ -35,9 +35,6 @@ class SettingViewModel(
 
     private lateinit var settingInitialState: SettingState
 
-    // Uri used to save photos taken with the camera
-    private var uri: Uri? = null
-
     init {
         viewModelScope.launch {
             val setting = settingRepository.getSetting()

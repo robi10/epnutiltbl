@@ -16,7 +16,6 @@
 
 package com.example.compose.epnutiltbl.setting
 
-import android.net.Uri
 import androidx.annotation.StringRes
 
 data class SettingResult(
@@ -40,38 +39,14 @@ data class Question(
 /**
  * Type of supported actions for a survey
  */
-enum class SettingActionType { PICK_DATE, TAKE_PHOTO, SELECT_CONTACT }
-
-sealed class SettingActionResult {
-    data class Date(val date: String) : SettingActionResult()
-    data class Photo(val uri: Uri) : SettingActionResult()
-    data class Contact(val contact: String) : SettingActionResult()
-}
 
 sealed class PossibleAnswer {
-    data class SingleChoice(val optionsStringRes: List<Int>) : PossibleAnswer()
     data class MultipleChoice(val optionsStringRes: List<Int>) : PossibleAnswer()
-    data class Action(
-        @StringRes val label: Int,
-        val actionType: SettingActionType
-    ) : PossibleAnswer()
-
-    data class Slider(
-        val range: ClosedFloatingPointRange<Float>,
-        val steps: Int,
-        @StringRes val startText: Int,
-        @StringRes val endText: Int,
-        val defaultValue: Float = range.start
-    ) : PossibleAnswer()
 }
 
 sealed class Answer<T : PossibleAnswer> {
-    data class SingleChoice(@StringRes val answer: Int) : Answer<PossibleAnswer.SingleChoice>()
     data class MultipleChoice(val answersStringRes: Set<Int>) :
         Answer<PossibleAnswer.MultipleChoice>()
-
-    data class Action(val result: SettingActionResult) : Answer<PossibleAnswer.Action>()
-    data class Slider(val answerValue: Float) : Answer<PossibleAnswer.Slider>()
 }
 
 /**

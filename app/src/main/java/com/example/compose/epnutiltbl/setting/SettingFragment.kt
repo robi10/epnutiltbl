@@ -20,14 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts.TakePicture
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.compose.epnutiltbl.R
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
-import com.google.android.material.datepicker.MaterialDatePicker
 
 class SettingFragment : Fragment() {
 
