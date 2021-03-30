@@ -28,10 +28,6 @@ class QAViewModel() : ViewModel() {
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>> = _navigateTo
-
-    fun signInAsGuest() {
-        _navigateTo.value = Event(Setting)
-    }
 }
 
 @Suppress("UNCHECKED_CAST")

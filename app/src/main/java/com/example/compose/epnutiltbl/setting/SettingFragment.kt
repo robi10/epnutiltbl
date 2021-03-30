@@ -20,10 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.compose.epnutiltbl.Screen
+import com.example.compose.epnutiltbl.navigate
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 
 class SettingFragment : Fragment() {
@@ -37,19 +40,29 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
 
+        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
+            navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
+                navigate(navigateTo, Screen.Setting)
+            }
+        }
+
+
+        return ComposeView(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
+
             setContent {
                 EpnUtilTheme {
                     viewModel.uiState.observeAsState().value?.let { settingState ->
                         when (settingState) {
                             is SettingState.Questions -> SettingQuestionsScreen(
                                 questions = settingState,
-                                onDonePressed = { viewModel.computeResult(settingState) },
+                                onDonePressed = {
+                                    viewModel.computeResult(settingState)
+                               },
                                 onBackPressed = {
                                     activity?.onBackPressedDispatcher?.onBackPressed()
                                 }
@@ -57,6 +70,9 @@ class SettingFragment : Fragment() {
                             is SettingState.Result -> SettingResultScreen(
                                 result = settingState,
                                 onDonePressed = {
+                                    viewModel.qaGo()
+                                } ,
+                                onBackPressed = {
                                     activity?.onBackPressedDispatcher?.onBackPressed()
                                 }
                             )

@@ -24,7 +24,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.example.compose.jetsurvey"
+        applicationId "com.example.compose.epnutiltbl"
         minSdkVersion 28
         targetSdkVersion 30
         versionCode 1

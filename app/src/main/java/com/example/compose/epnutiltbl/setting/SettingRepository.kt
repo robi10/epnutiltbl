@@ -17,6 +17,8 @@
 package com.example.compose.epnutiltbl.setting
 
 import android.os.Build
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.example.compose.epnutiltbl.R
 import com.example.compose.epnutiltbl.setting.PossibleAnswer.MultipleChoice
 
@@ -68,6 +70,16 @@ object SettingRepository {
 
     @Suppress("UNUSED_PARAMETER")
     fun getSettingResult(answers: List<Answer<*>>): SettingResult {
+        for (answer in answers) {
+            val choiceStrs = answer as Answer.MultipleChoice?
+            val strs = choiceStrs?.answersStringRes?.toMutableList()
+            if (strs != null) {
+                for (str in strs) {
+
+                }
+            }
+        }
+
         return SettingResult(
             library = "Compose",
             result = R.string.setting_result,

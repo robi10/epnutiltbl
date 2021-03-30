@@ -99,7 +99,8 @@ fun SettingQuestionsScreen(
 @Composable
 fun SettingResultScreen(
     result: SettingState.Result,
-    onDonePressed: () -> Unit
+    onDonePressed: () -> Unit,
+    onBackPressed: () -> Unit
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -108,13 +109,24 @@ fun SettingResultScreen(
                 SettingResult(result = result, modifier = modifier)
             },
             bottomBar = {
-                OutlinedButton(
-                    onClick = { onDonePressed() },
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 24.dp)
+                        .padding(horizontal = 16.dp, vertical = 20.dp)
                 ) {
-                    Text(text = stringResource(id = R.string.done))
+                    OutlinedButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = onBackPressed
+                    ) {
+                        Text(text = stringResource(id = R.string.previous))
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = onDonePressed,
+                    ) {
+                        Text(text = stringResource(id = R.string.done))
+                    }
                 }
             }
         )
