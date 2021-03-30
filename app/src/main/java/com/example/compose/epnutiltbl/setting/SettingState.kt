@@ -44,6 +44,6 @@ sealed class SettingState {
 
     data class Result(
         @StringRes val settingTitle: Int,
-        val settingResult: SettingResult
+        val settingResult:SettingResult
     ) : SettingState()
 }

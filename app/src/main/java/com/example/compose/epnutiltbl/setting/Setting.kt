@@ -46,7 +46,8 @@ sealed class PossibleAnswer {
 
 sealed class Answer<T : PossibleAnswer> {
     data class MultipleChoice(val answersStringRes: Set<Int>) :
-        Answer<PossibleAnswer.MultipleChoice>()
+        Answer<PossibleAnswer.MultipleChoice>() {
+    }
 }
 
 /**
