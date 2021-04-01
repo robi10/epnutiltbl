@@ -20,7 +20,7 @@ import androidx.annotation.StringRes
 
 data class SettingResult(
     val library: String,
-    @StringRes val result: Int,
+    @StringRes val result: List<Int>,
     @StringRes val description: Int
 )
 

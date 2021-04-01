@@ -17,8 +17,6 @@
 package com.example.compose.epnutiltbl.setting
 
 import android.os.Build
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.example.compose.epnutiltbl.R
 import com.example.compose.epnutiltbl.setting.PossibleAnswer.MultipleChoice
 
@@ -69,21 +67,26 @@ object SettingRepository {
     suspend fun getSetting() = jetpackSetting
 
     @Suppress("UNUSED_PARAMETER")
-    fun getSettingResult(answers: List<Answer<*>>): SettingResult {
-        for (answer in answers) {
+    fun getSettingResult(options:List<PossibleAnswer>,answers: List<Answer<*>>): List<ResultState> {
+        val list = ArrayList<ResultState>()
+        for ((count, answer) in answers.withIndex()) {
+            val optionsRes = options[count] as MultipleChoice?
+            val optionsResStr = optionsRes?.optionsStringRes?.toMutableList()
             val choiceStrs = answer as Answer.MultipleChoice?
             val strs = choiceStrs?.answersStringRes?.toMutableList()
+
+            var res = ResultState()
             if (strs != null) {
                 for (str in strs) {
-
+                    var selectId = -1
+                    if (optionsResStr != null) {
+                        selectId = optionsResStr.indexOf(str)
+                    }
+                    res.add(selectId, str)
                 }
             }
+            list.add(res)
         }
-
-        return SettingResult(
-            library = "Compose",
-            result = R.string.setting_result,
-            description = R.string.setting_result_description
-        )
+        return list
     }
 }

@@ -47,7 +47,6 @@ class SettingFragment : Fragment() {
             }
         }
 
-
         return ComposeView(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -57,26 +56,16 @@ class SettingFragment : Fragment() {
             setContent {
                 EpnUtilTheme {
                     viewModel.uiState.observeAsState().value?.let { settingState ->
-                        when (settingState) {
-                            is SettingState.Questions -> SettingQuestionsScreen(
-                                questions = settingState,
-                                onDonePressed = {
-                                    viewModel.computeResult(settingState)
-                               },
-                                onBackPressed = {
-                                    activity?.onBackPressedDispatcher?.onBackPressed()
-                                }
-                            )
-                            is SettingState.Result -> SettingResultScreen(
-                                result = settingState,
-                                onDonePressed = {
-                                    viewModel.qaGo()
-                                } ,
-                                onBackPressed = {
-                                    activity?.onBackPressedDispatcher?.onBackPressed()
-                                }
-                            )
-                        }
+                        SettingQuestionsScreen(
+                            questions = settingState as SettingState.Questions,
+                            onDonePressed = {
+                                viewModel.computeResult(settingState)
+                                viewModel.qaGo()
+                            },
+                            onBackPressed = {
+                                activity?.onBackPressedDispatcher?.onBackPressed()
+                            }
+                        )
                     }
                 }
             }
