@@ -31,15 +31,14 @@ import com.example.compose.epnutiltbl.theme.EpnUtilTheme
  * Fragment containing the welcome UI.
  */
 class QAFragment : Fragment() {
-
-    private val viewModel: QAViewModel by viewModels { QAViewModelFactory() }
+    private val viewModelQA: QAViewModel by viewModels { QAViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
+        viewModelQA.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.QA)
             }

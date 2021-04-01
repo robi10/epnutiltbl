@@ -20,7 +20,7 @@ import com.example.compose.epnutiltbl.buildsrc.Versions
 buildscript {
     repositories {
         google()
-        //jcenter()
+        jcenter()
         mavenCentral()
     }
     dependencies {

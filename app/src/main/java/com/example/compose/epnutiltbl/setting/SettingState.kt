@@ -41,9 +41,20 @@ sealed class SettingState {
     ) : SettingState() {
         var currentQuestionIndex by mutableStateOf(0)
     }
+}
 
-    data class Result(
-        @StringRes val settingTitle: Int,
-        val settingResult:SettingResult
-    ) : SettingState()
+@Stable
+class ResultState() {
+    private val selectIds:ArrayList<Int>? by lazy { ArrayList()}
+    private val selectStringIds:ArrayList<Int>? by lazy { ArrayList()}
+
+    fun add(selectId:Int, selectStringId:Int) {
+        selectIds?.add(selectId)
+        selectStringIds?.add(selectStringId)
+    }
+
+    fun delete(selectId:Int, selectStringId:Int) {
+        selectIds?.remove(selectId)
+        selectStringIds?.remove(selectStringId)
+    }
 }

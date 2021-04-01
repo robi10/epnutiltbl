@@ -25,7 +25,6 @@ import com.example.compose.epnutiltbl.Screen.Setting
 import com.example.compose.epnutiltbl.util.Event
 
 class QAViewModel() : ViewModel() {
-
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>> = _navigateTo
 }

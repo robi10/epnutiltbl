@@ -17,7 +17,6 @@
 package com.example.compose.epnutiltbl.qa
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +39,6 @@ import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +50,7 @@ import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 @Composable
 fun QAScreen(onEvent: () -> Unit) {
     var brandingBottom by remember { mutableStateOf(0f) }
-    var showBranding by remember { mutableStateOf(true) }
+    val showBranding by remember { mutableStateOf(true) }
     var heightWithBranding by remember { mutableStateOf(0) }
 
     val currentOffsetHolder = remember { mutableStateOf(0f) }
@@ -73,16 +71,65 @@ fun QAScreen(onEvent: () -> Unit) {
                     }
                 }
         ) {
-            Branding(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .onGloballyPositioned {
-                        if (brandingBottom == 0f) {
-                            brandingBottom = it.boundsInParent().bottom
+                    .wrapContentHeight(align = Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.app_tagline),
+                    style = MaterialTheme.typography.h6,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .fillMaxWidth()
+                        .onGloballyPositioned {
+                            if (brandingBottom == 0f) {
+                                brandingBottom = it.boundsInParent().bottom
+                            }
                         }
-                    }
-            )
+                )
+                Text(
+                    text = stringResource(id = R.string.app_tagline),
+                    style = MaterialTheme.typography.h6,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .fillMaxWidth()
+                        .onGloballyPositioned {
+                            if (brandingBottom == 0f) {
+                                brandingBottom = it.boundsInParent().bottom
+                            }
+                        }
+                )
+                Text(
+                    text = stringResource(id = R.string.app_tagline),
+                    style = MaterialTheme.typography.h6,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .fillMaxWidth()
+                        .onGloballyPositioned {
+                            if (brandingBottom == 0f) {
+                                brandingBottom = it.boundsInParent().bottom
+                            }
+                        }
+                )
+                Text(
+                    text = stringResource(id = R.string.app_tagline),
+                    style = MaterialTheme.typography.h6,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .fillMaxWidth()
+                        .onGloballyPositioned {
+                            if (brandingBottom == 0f) {
+                                brandingBottom = it.boundsInParent().bottom
+                            }
+                        }
+                )
+            }
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(
                     onClick = onEvent,
@@ -111,44 +158,6 @@ private fun Modifier.brandingPreferredHeight(
     } else {
         this
     }
-}
-
-@Composable
-private fun Branding(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.wrapContentHeight(align = Alignment.CenterVertically)
-    ) {
-        Logo(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(horizontal = 76.dp)
-        )
-        Text(
-            text = stringResource(id = R.string.app_tagline),
-            style = MaterialTheme.typography.subtitle1,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 24.dp)
-                .fillMaxWidth()
-        )
-    }
-}
-
-@Composable
-private fun Logo(
-    modifier: Modifier = Modifier,
-    lightTheme: Boolean = MaterialTheme.colors.isLight
-) {
-    val assetId = if (lightTheme) {
-        R.drawable.ic_logo_light
-    } else {
-        R.drawable.ic_logo_dark
-    }
-    Image(
-        painter = painterResource(id = assetId),
-        modifier = modifier,
-        contentDescription = null
-    )
 }
 
 @Preview(name = "Welcome light theme")
