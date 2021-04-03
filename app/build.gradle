@@ -113,4 +113,5 @@ dependencies {
     implementation Libs.AndroidX.Compose.runtimeLivedata
 
     implementation Libs.Accompanist.coil
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 }

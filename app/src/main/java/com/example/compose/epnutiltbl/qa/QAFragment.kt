@@ -22,7 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.compose.epnutiltbl.DataViewModel
 import com.example.compose.epnutiltbl.Screen
 import com.example.compose.epnutiltbl.navigate
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
@@ -31,24 +33,42 @@ import com.example.compose.epnutiltbl.theme.EpnUtilTheme
  * Fragment containing the welcome UI.
  */
 class QAFragment : Fragment() {
-    private val viewModelQA: QAViewModel by viewModels { QAViewModelFactory() }
+    private val viewModel: QAViewModel by viewModels { QAViewModelFactory() }
+
+    private val dataModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModelQA.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
+    ): View {
+        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.QA)
             }
         }
 
+        val data = dataModel.uiResult.value
+        if (data != null) {
+            for (datum in data) {
+                val selectIds = datum.selectIds
+                val selectStringIds = datum.selectStringIds
+
+                for ((count, selectId) in selectIds.withIndex()) {
+                    val selectStringId = selectStringIds[count]
+                    print(selectId)
+                    print(selectStringId)
+                }
+            }
+        }
         return ComposeView(requireContext()).apply {
             setContent {
                 EpnUtilTheme {
                     QAScreen(
-                        onEvent = {  }
+                        data = data,
+                        onPrevious = { },
+                        onSetting = { viewModel.settingGo() },
+                        onNext = { },
                     )
                 }
             }

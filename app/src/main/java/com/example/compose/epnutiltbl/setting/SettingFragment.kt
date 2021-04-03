@@ -20,27 +20,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.compose.epnutiltbl.DataViewModel
 import com.example.compose.epnutiltbl.Screen
 import com.example.compose.epnutiltbl.navigate
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 
 class SettingFragment : Fragment() {
-
     private val viewModel: SettingViewModel by viewModels {
         SettingViewModelFactory()
     }
+
+    private val dataModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.Setting)
@@ -59,7 +60,8 @@ class SettingFragment : Fragment() {
                         SettingQuestionsScreen(
                             questions = settingState as SettingState.Questions,
                             onDonePressed = {
-                                viewModel.computeResult(settingState)
+                                val result = viewModel.computeResult(settingState)
+                                dataModel.setResult(result)
                                 viewModel.qaGo()
                             },
                             onBackPressed = {

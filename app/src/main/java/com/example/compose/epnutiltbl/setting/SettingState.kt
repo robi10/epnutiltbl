@@ -43,18 +43,3 @@ sealed class SettingState {
     }
 }
 
-@Stable
-class ResultState() {
-    private val selectIds:ArrayList<Int>? by lazy { ArrayList()}
-    private val selectStringIds:ArrayList<Int>? by lazy { ArrayList()}
-
-    fun add(selectId:Int, selectStringId:Int) {
-        selectIds?.add(selectId)
-        selectStringIds?.add(selectStringId)
-    }
-
-    fun delete(selectId:Int, selectStringId:Int) {
-        selectIds?.remove(selectId)
-        selectStringIds?.remove(selectStringId)
-    }
-}
