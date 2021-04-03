@@ -16,11 +16,8 @@
 
 package com.example.compose.epnutiltbl.setting
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.compose.epnutiltbl.ResultState
 import com.example.compose.epnutiltbl.Screen
 import com.example.compose.epnutiltbl.util.Event
 import kotlinx.coroutines.launch
@@ -32,10 +29,6 @@ class SettingViewModel(
     private val _uiState = MutableLiveData<SettingState>()
     val uiState: LiveData<SettingState>
         get() = _uiState
-
-    private var _uiResult = MutableLiveData<List<ResultState>>()
-    val uiResult:LiveData<List<ResultState>>
-        get() = _uiResult
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>> = _navigateTo
@@ -63,12 +56,14 @@ class SettingViewModel(
         }
     }
 
-    fun computeResult(settingQuestions: SettingState.Questions) {
+    fun computeResult(
+        settingQuestions: SettingState.Questions,
+    ):List<ResultState>{
         val options = settingQuestions.questionsState.mapNotNull { it.question.answer }
         val answers = settingQuestions.questionsState.mapNotNull { it.answer }
-        val result = SettingRepository.getSettingResult(options, answers)
-        _uiResult.value = result
+        return SettingRepository.getSettingResult(options, answers)
     }
+
     fun qaGo() {
         _navigateTo.value = Event(Screen.QA)
     }

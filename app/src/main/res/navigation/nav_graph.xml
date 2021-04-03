@@ -24,15 +24,27 @@
         android:id="@+id/welcome_fragment"
         android:name="com.example.compose.epnutiltbl.welcome.WelcomeFragment"
         android:label="Welcome">
+        <action
+            android:id="@+id/action_welcome_fragment_to_setting_fragment"
+            app:destination="@id/setting_fragment" />
+        <action
+            android:id="@+id/action_welcome_fragment_to_qa_fragment"
+            app:destination="@id/qa_fragment" />
     </fragment>
     <fragment
         android:id="@+id/setting_fragment"
         android:name="com.example.compose.epnutiltbl.setting.SettingFragment"
         android:label="Setting">
+        <action
+            android:id="@+id/action_setting_fragment_to_qa_fragment"
+            app:destination="@id/qa_fragment" />
     </fragment>
     <fragment
         android:id="@+id/qa_fragment"
         android:name="com.example.compose.epnutiltbl.qa.QAFragment"
         android:label="QA">
+        <action
+            android:id="@+id/action_qa_fragment_to_setting_fragment"
+            app:destination="@id/setting_fragment" />
     </fragment>
 </navigation>

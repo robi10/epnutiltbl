@@ -16,8 +16,8 @@
 
 package com.example.compose.epnutiltbl.setting
 
-import android.os.Build
 import com.example.compose.epnutiltbl.R
+import com.example.compose.epnutiltbl.ResultState
 import com.example.compose.epnutiltbl.setting.PossibleAnswer.MultipleChoice
 
 // Static data of questions
@@ -75,17 +75,20 @@ object SettingRepository {
             val choiceStrs = answer as Answer.MultipleChoice?
             val strs = choiceStrs?.answersStringRes?.toMutableList()
 
-            var res = ResultState()
+            var selectIds = ArrayList<Int>()
+            var selectStringIds = ArrayList<Int>()
             if (strs != null) {
                 for (str in strs) {
                     var selectId = -1
                     if (optionsResStr != null) {
                         selectId = optionsResStr.indexOf(str)
                     }
-                    res.add(selectId, str)
+                    selectIds.add(selectId)
+                    selectStringIds.add(str)
                 }
+
             }
-            list.add(res)
+            list.add(ResultState(selectIds, selectStringIds))
         }
         return list
     }

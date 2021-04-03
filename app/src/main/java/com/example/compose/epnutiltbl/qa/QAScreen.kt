@@ -17,22 +17,12 @@
 package com.example.compose.epnutiltbl.qa
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.boundsInParent
@@ -45,10 +35,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.epnutiltbl.R
+import com.example.compose.epnutiltbl.ResultState
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 
 @Composable
-fun QAScreen(onEvent: () -> Unit) {
+fun QAScreen(
+    data: List<ResultState>?,
+    onPrevious:()->Unit,
+    onSetting:()->Unit,
+    onNext: ()-> Unit
+) {
     var brandingBottom by remember { mutableStateOf(0f) }
     val showBranding by remember { mutableStateOf(true) }
     var heightWithBranding by remember { mutableStateOf(0) }
@@ -58,6 +54,17 @@ fun QAScreen(onEvent: () -> Unit) {
     val currentOffsetHolderDp =
         with(LocalDensity.current) { currentOffsetHolder.value.toDp() }
     val heightDp = with(LocalDensity.current) { heightWithBranding.toDp() }
+
+    var selectStringA by remember { mutableStateOf(-1)}
+    var selectStringB by remember { mutableStateOf(-1)}
+    val selectStringC by remember { mutableStateOf(-1)}
+
+    if (data != null) {
+        selectStringA = data[0].selectStringIds[0]
+        selectStringB = data[1].selectStringIds[0]
+    }
+    selectStringC.toString()
+
     Surface(modifier = Modifier.fillMaxSize()) {
         val offset by animateDpAsState(targetValue = currentOffsetHolderDp)
         Column(
@@ -78,7 +85,7 @@ fun QAScreen(onEvent: () -> Unit) {
                     .wrapContentHeight(align = Alignment.CenterVertically)
             ) {
                 Text(
-                    text = stringResource(id = R.string.app_tagline),
+                    text = stringResource(id = selectStringA),
                     style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -91,7 +98,7 @@ fun QAScreen(onEvent: () -> Unit) {
                         }
                 )
                 Text(
-                    text = stringResource(id = R.string.app_tagline),
+                    text = stringResource(id = selectStringB),
                     style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -130,17 +137,39 @@ fun QAScreen(onEvent: () -> Unit) {
                         }
                 )
             }
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(
-                    onClick = onEvent,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 28.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.user_continue),
-                        style = MaterialTheme.typography.subtitle2
-                    )
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
+                Row( modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 20.dp)) {
+                    Button(
+                        onClick = onPrevious,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.user_continue),
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        onClick = onSetting,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.user_continue),
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        onClick = onNext,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.user_continue),
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                    }
                 }
             }
         }
@@ -164,7 +193,7 @@ private fun Modifier.brandingPreferredHeight(
 @Composable
 fun QAScreenPreview() {
     EpnUtilTheme {
-        QAScreen {}
+        QAScreen(data = null, onPrevious = {}, onSetting = {}, onNext = {})
     }
 }
 
@@ -172,6 +201,6 @@ fun QAScreenPreview() {
 @Composable
 fun QAScreenPreviewDark() {
     EpnUtilTheme(darkTheme = true) {
-        QAScreen {}
+        QAScreen(data = null, onPrevious = {}, onSetting = {}, onNext = {})
     }
 }
