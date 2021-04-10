@@ -20,12 +20,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.compose.epnutiltbl.DataViewModel
 import com.example.compose.epnutiltbl.Screen
+import com.example.compose.epnutiltbl.data.DataViewModel
+import com.example.compose.epnutiltbl.data.SettingState
 import com.example.compose.epnutiltbl.navigate
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 
@@ -48,28 +50,32 @@ class QAFragment : Fragment() {
             }
         }
 
-        val data = dataModel.uiResult.value
-        if (data != null) {
-            for (datum in data) {
-                val selectIds = datum.selectIds
-                val selectStringIds = datum.selectStringIds
+        val data = dataModel.uiState.value as SettingState.Result
 
-                for ((count, selectId) in selectIds.withIndex()) {
-                    val selectStringId = selectStringIds[count]
-                    print(selectId)
-                    print(selectStringId)
-                }
-            }
-        }
         return ComposeView(requireContext()).apply {
             setContent {
                 EpnUtilTheme {
-                    QAScreen(
-                        data = data,
-                        onPrevious = { },
-                        onSetting = { viewModel.settingGo() },
-                        onNext = { },
-                    )
+                    viewModel.uiState.observeAsState().value?.let { qaState ->
+                        when (qaState) {
+                            QAStatus.QAQuestion -> QAScreen(
+                                data = data,
+                                onAnswer = {
+                                    viewModel.setUiState(QAStatus.QAAnswer) },
+                                onSetting = {
+                                    dataModel.setInit()
+                                    viewModel.settingGo() }
+                            )
+                            QAStatus.QAAnswer -> QAResultScreen(
+                                data = data,
+                                onPrevious = { },
+                                onSetting = {
+                                    dataModel.setInit()
+                                    viewModel.settingGo() },
+                                onNext = {
+                                    viewModel.setUiState(QAStatus.QAQuestion) }
+                            )
+                        }
+                    }
                 }
             }
         }

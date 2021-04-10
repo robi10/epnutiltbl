@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.epnutiltbl.setting
+package com.example.compose.epnutiltbl.data
 
 import androidx.annotation.StringRes
 
@@ -45,8 +45,11 @@ sealed class PossibleAnswer {
 }
 
 sealed class Answer<T : PossibleAnswer> {
+    abstract val allChecked: Boolean
+
     data class MultipleChoice(val answersStringRes: Set<Int>) :
         Answer<PossibleAnswer.MultipleChoice>() {
+            override var allChecked:Boolean = false
     }
 }
 

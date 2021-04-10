@@ -21,7 +21,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha12"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
     const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.0.9"
 
     const val junit = "junit:junit:4.13"
@@ -52,7 +52,7 @@ object Libs {
         const val coreKtx = "androidx.core:core-ktx:1.5.0-beta03"
 
         object Lifecycle {
-            private const val version = "2.3.0-beta01"
+            private const val version = "2.4.0-alpha01"
             const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
             const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-core:$version"

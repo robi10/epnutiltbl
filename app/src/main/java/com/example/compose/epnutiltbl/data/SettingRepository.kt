@@ -14,40 +14,40 @@
  * limitations under the License.
  */
 
-package com.example.compose.epnutiltbl.setting
+package com.example.compose.epnutiltbl.data
 
 import com.example.compose.epnutiltbl.R
-import com.example.compose.epnutiltbl.ResultState
-import com.example.compose.epnutiltbl.setting.PossibleAnswer.MultipleChoice
+import com.example.compose.epnutiltbl.data.PossibleAnswer.MultipleChoice
 
 // Static data of questions
 private val jetpackQuestions = mutableListOf(
     Question(
         id = 1,
-        questionText = R.string.in_my_free_time,
+        questionText = R.string.person_selection,
         answer = MultipleChoice(
             optionsStringRes = listOf(
-                R.string.read,
-                R.string.work_out,
-                R.string.draw,
-                R.string.play_games,
-                R.string.dance,
-                R.string.watch_movies
+                R.string.first_person_singular,
+                R.string.second_person_singular,
+                R.string.third_person_singular,
+                R.string.first_person_plural,
+                R.string.second_person_plural,
+                R.string.third_person_singular
             )
         ),
         description = R.string.select_all
     ),
     Question(
         id = 2,
-        questionText = R.string.in_my_free_time,
+        questionText = R.string.tense_selection,
         answer = MultipleChoice(
             optionsStringRes = listOf(
-                R.string.read,
-                R.string.work_out,
-                R.string.draw,
-                R.string.play_games,
-                R.string.dance,
-                R.string.watch_movies
+                R.string.direct_present_tense,
+                R.string.direct_point_past_form,
+                R.string.direct_line_past_form,
+                R.string.direct_future_tense,
+                R.string.direct_past_future_form,
+                R.string.subjunctive_present_tense,
+                R.string.subjunctive_past_form
             )
         ),
         description = R.string.select_all
@@ -67,7 +67,9 @@ object SettingRepository {
     suspend fun getSetting() = jetpackSetting
 
     @Suppress("UNUSED_PARAMETER")
-    fun getSettingResult(options:List<PossibleAnswer>,answers: List<Answer<*>>): List<ResultState> {
+    fun getSettingResult(options:List<PossibleAnswer>,answers: List<Answer<*>>):
+            SettingState.Result {
+
         val list = ArrayList<ResultState>()
         for ((count, answer) in answers.withIndex()) {
             val optionsRes = options[count] as MultipleChoice?
@@ -90,6 +92,7 @@ object SettingRepository {
             }
             list.add(ResultState(selectIds, selectStringIds))
         }
-        return list
+
+        return SettingState.Result(results = list)
     }
 }

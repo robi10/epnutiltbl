@@ -21,12 +21,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.compose.epnutiltbl.data.DataViewModel
+import com.example.compose.epnutiltbl.data.DataViewModelFactory
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
-    private val dataModel: DataViewModel by viewModels {
-        DataViewModelFactory()
-    }
+    private val dataModel: DataViewModel by viewModels { DataViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,6 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
-
+        dataModel
     }
 }
