@@ -16,27 +16,8 @@
 
 package com.example.compose.epnutiltbl.setting
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
@@ -50,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.example.compose.epnutiltbl.R
+import com.example.compose.epnutiltbl.data.*
 import com.example.compose.epnutiltbl.theme.progressIndicatorBackground
 
 @Composable
@@ -62,6 +44,9 @@ fun SettingQuestionsScreen(
         questions.questionsState[questions.currentQuestionIndex]
     }
 
+    if (questionState.answer == null) {
+        questionState.answer = Answer.MultipleChoice(setOf())
+    }
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
@@ -78,6 +63,21 @@ fun SettingQuestionsScreen(
                     onAnswer = {
                         questionState.answer = it
                         questionState.enableNext = true
+                    },
+                    onAllChecked = {
+                        var options = questionState.question.answer as PossibleAnswer.MultipleChoice
+                        var optionRes = options.optionsStringRes
+                        questionState.enableNext = true
+
+                        var answers = questionState.answer as Answer<*>
+                        var answer: Answer.MultipleChoice?
+                        val allChecked = answers.allChecked
+                        for (id in optionRes) {
+                            answers = questionState.answer as Answer<*>
+                            answer = answers as Answer.MultipleChoice?
+                            questionState.answer = answer?.withAnswerSelected(id, true)
+                        }
+                        (questionState.answer as Answer.MultipleChoice?)?.allChecked = allChecked
                     },
                     modifier = Modifier
                         .fillMaxSize()

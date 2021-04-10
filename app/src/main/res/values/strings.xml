@@ -32,11 +32,11 @@
         handle your data according to our Privacy Policy.</string>
     <string name="feature_not_available">Feature not available</string>
     <string name="dismiss">DISMISS</string>
-    <string name="next">NEXT</string>
-    <string name="previous">PREVIOUS</string>
-    <string name="done">DONE</string>
-    <string name="back">Back</string>
-    <string name="close">Close</string>
+    <string name="next">次へ</string>
+    <string name="previous">前へ戻る</string>
+    <string name="done">完了</string>
+    <string name="back">戻る</string>
+    <string name="close">閉じる</string>
     <string name="show_password">Show password</string>
     <string name="hide_password">Hide password</string>
 
@@ -48,48 +48,36 @@
     <string name="select_date">Select date.</string>
 
     <!-- question 1-->
-    <string name="in_my_free_time">In my free time I like to …</string>
-    <string name="read">Read</string>
-    <string name="work_out">Work out</string>
-    <string name="draw">Draw</string>
-    <string name="play_games">Play video games</string>
-    <string name="dance">Dance</string>
-    <string name="watch_movies">Watch movies</string>
+    <string name="person_selection">練習したい人称を選択してください</string>
+    <string name="first_person_singular">yo</string>
+    <string name="second_person_singular">tú</string>
+    <string name="third_person_singular">usted/él/ella</string>
+    <string name="first_person_plural">nosotros</string>
+    <string name="second_person_plural">vosotros</string>
+    <string name="third_person_plural">ellos/ellas/ustedes</string>
 
     <!-- question 2 -->
-    <string name="pick_superhero">Pick a superhero</string>
-    <string name="spiderman">Spider man (Avengers)</string>
-    <string name="ironman">Iron man (Avengers)</string>
-    <string name="unikitty">Uni-kitty (Lego Movie)</string>
-    <string name="captain_planet">Captain Planet</string>
+    <string name="tense_selection">練習したい時制を選択してください</string>
+    <string name="direct_present_tense">現在形</string>
+    <string name="direct_point_past_form">点過去形</string>
+    <string name="direct_line_past_form">線過去形</string>
+    <string name="direct_future_tense">未来形</string>
+    <string name="direct_past_future_form">過去未来形</string>
+    <string name="subjunctive_present_tense">現在形</string>
+    <string name="subjunctive_past_form">現在形</string>
 
-    <!-- question 3  -->
-    <string name="takeaway">When was the last time you ordered takeaway because you couldn\'t be bothered to cook?</string>
-    <string name="pick_date">Pick a date</string>
-    <string name="selected_date">🥡 📅  %s</string>
-
-    <!-- question 4-->
-    <string name="selfies">How do you feel about selfies 🤳?</string>
-    <string name="selfie_min">😒️</string>
-    <string name="selfie_max">🤩️</string>
-
-    <!-- question 5-->
-    <string name="selfie_skills">Show off your selfie skills!</string>
-    <string name="add_photo">ADD PHOTO</string>
-    <string name="retake_photo">RETAKE PHOTO</string>
-
-    <!-- question 6-->
-    <string name="best_friend">Who\'s your best friend?</string>
-    <string name="pick_contact">Pick a contact</string>
-
-    <!-- question 7-->
-    <string name="favourite_movie">What\'s your favourite movie?</string>
-    <string name="star_trek">Star Trek</string>
-    <string name="social_network">The social network</string>
-    <string name="back_to_future">Back to the future</string>
-    <string name="outbreak">Outbreak</string>
 
     <string name="setting_result">Congratulations, you are %s</string>
     <string name="setting_result_description">You are a curious developer, always willing to try
         something new. You want to stay up to date with the trends to Compose is your middle name</string>
+
+    <!-- other -->
+    <string name="allchecked">全ての項目</string>
+
+
+    <string name="to_setting">設定に戻る</string>
+    <string name="to_next">次へ</string>
+    <string name="to_back">戻る</string>
+
+    <string name="to_answer">活用</string>
 </resources>

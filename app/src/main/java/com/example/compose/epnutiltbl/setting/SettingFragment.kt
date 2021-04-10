@@ -25,8 +25,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.compose.epnutiltbl.DataViewModel
 import com.example.compose.epnutiltbl.Screen
+import com.example.compose.epnutiltbl.data.DataViewModel
+import com.example.compose.epnutiltbl.data.SettingState
 import com.example.compose.epnutiltbl.navigate
 import com.example.compose.epnutiltbl.theme.EpnUtilTheme
 
@@ -56,18 +57,21 @@ class SettingFragment : Fragment() {
 
             setContent {
                 EpnUtilTheme {
-                    viewModel.uiState.observeAsState().value?.let { settingState ->
-                        SettingQuestionsScreen(
-                            questions = settingState as SettingState.Questions,
-                            onDonePressed = {
-                                val result = viewModel.computeResult(settingState)
-                                dataModel.setResult(result)
-                                viewModel.qaGo()
-                            },
-                            onBackPressed = {
-                                activity?.onBackPressedDispatcher?.onBackPressed()
-                            }
-                        )
+                    dataModel.uiState.observeAsState().value?.let { settingState ->
+                        when (settingState) {
+                            is SettingState.Questions ->
+                                SettingQuestionsScreen(
+                                    questions = settingState,
+                                    onDonePressed = {
+                                        dataModel.computeResult(settingState)
+                                        viewModel.qaGo()
+                                    },
+                                    onBackPressed = {
+                                        activity?.onBackPressedDispatcher?.onBackPressed()
+                                    }
+                                )
+                            else -> {}
+                        }
                     }
                 }
             }

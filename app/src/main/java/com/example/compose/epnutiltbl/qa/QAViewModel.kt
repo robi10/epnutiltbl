@@ -23,12 +23,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.compose.epnutiltbl.Screen
 import com.example.compose.epnutiltbl.util.Event
 
+enum class QAStatus { QAQuestion, QAAnswer }
+
 class QAViewModel() : ViewModel() {
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>> = _navigateTo
 
+    private var _uiState = MutableLiveData(QAStatus.QAQuestion)
+    val uiState: LiveData<QAStatus>
+        get() = _uiState
+
     fun settingGo() {
         _navigateTo.value = Event(Screen.Setting)
+    }
+
+    fun setUiState(qaAnswer: QAStatus) {
+        _uiState.value = qaAnswer
     }
 }
 

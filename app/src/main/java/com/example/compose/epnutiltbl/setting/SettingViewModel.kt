@@ -16,53 +16,17 @@
 
 package com.example.compose.epnutiltbl.setting
 
-import androidx.lifecycle.*
-import com.example.compose.epnutiltbl.ResultState
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.compose.epnutiltbl.Screen
 import com.example.compose.epnutiltbl.util.Event
-import kotlinx.coroutines.launch
 
-class SettingViewModel(
-    private val settingRepository: SettingRepository,
-) : ViewModel() {
-
-    private val _uiState = MutableLiveData<SettingState>()
-    val uiState: LiveData<SettingState>
-        get() = _uiState
+class SettingViewModel : ViewModel() {
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>> = _navigateTo
-
-    private lateinit var settingInitialState: SettingState
-
-    init {
-        viewModelScope.launch {
-            val setting = settingRepository.getSetting()
-
-            // Create the default questions state based on the survey questions
-            val questions: List<QuestionState> = setting.questions.mapIndexed { index, question ->
-                val showPrevious = index > 0
-                val showDone = index == setting.questions.size - 1
-                QuestionState(
-                    question = question,
-                    questionIndex = index,
-                    totalQuestionsCount = setting.questions.size,
-                    showPrevious = showPrevious,
-                    showDone = showDone
-                )
-            }
-            settingInitialState = SettingState.Questions(setting.title, questions)
-            _uiState.value = settingInitialState
-        }
-    }
-
-    fun computeResult(
-        settingQuestions: SettingState.Questions,
-    ):List<ResultState>{
-        val options = settingQuestions.questionsState.mapNotNull { it.question.answer }
-        val answers = settingQuestions.questionsState.mapNotNull { it.answer }
-        return SettingRepository.getSettingResult(options, answers)
-    }
 
     fun qaGo() {
         _navigateTo.value = Event(Screen.QA)
@@ -74,7 +38,7 @@ class SettingViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
-            return SettingViewModel(SettingRepository) as T
+            return SettingViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

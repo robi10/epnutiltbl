@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.epnutiltbl.setting
+package com.example.compose.epnutiltbl.data
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
@@ -41,5 +41,15 @@ sealed class SettingState {
     ) : SettingState() {
         var currentQuestionIndex by mutableStateOf(0)
     }
+
+    data class Result(
+        val results : List<ResultState>
+    ) :SettingState()
+
 }
 
+@Stable
+data class ResultState(
+    val selectIds: List<Int>,
+    val selectStringIds:List<Int>
+)
